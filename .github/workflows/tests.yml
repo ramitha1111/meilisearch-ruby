@@ -1,3 +1,8 @@
+# Optimized by ci-cost (https://github.com/mariotavarez/ci-cost)
+# Applied 1 optimization:
+# - [MEDIUM] Add concurrency group to "tests.yml"
+# Estimated savings: ~2 min/run
+#
 name: Tests
 
 on:
@@ -8,6 +13,10 @@ on:
       - main
   merge_group:
 
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
 jobs:
   integration_tests:
     # Will not run if the event is a PR to bump-meilisearch-v* (so a pre-release PR)
